@@ -46,6 +46,14 @@ public class PlayerData
     /// </summary>
     private List<string> _chestOpenList;
     /// <summary>
+    /// Liste des collectables recuperer
+    /// </summary>
+    private List<string> _collectableList;
+    /// <summary>
+    /// Niveau max que le joueur a atteint
+    /// </summary>
+    private int _currentMaxLevel;
+    /// <summary>
     /// Représente le maximum d'énergie du personnage
     /// </summary>
     public const int MAX_ENERGIE = 4;
@@ -81,12 +89,14 @@ public class PlayerData
         this.UIPerteVie = null;
         this.Gameover = null;
         this._chestOpenList = new List<string>();
+        this._collectableList = new List<string>();
+        this._currentMaxLevel = 1;
     }
 
     public PlayerData(int vie = 1, int energie = 2, int score = 0,
         float volumeGeneral = 0, float volumeMusique = 0, float volumeEffet = 0,
         System.Action uiPerteEnergie = null, System.Action uiPerteVie = null,
-        System.Action gameOver = null, List<string> ChestList = null)
+        System.Action gameOver = null, List<string> ChestList = null , List<string> CollectableList = null, int CurrentMaxLevel = 1 )
     {
         this._vie = vie;
         this._energie = energie;
@@ -99,7 +109,36 @@ public class PlayerData
         this.Gameover += gameOver;
         this._chestOpenList = new List<string>();
         if (ChestList != null)
-            this._chestOpenList = ChestList;
+            this._chestOpenList = ChestList; 
+        this._collectableList = new List<string>();
+        if (CollectableList!= null)
+            this._collectableList= CollectableList;
+    }
+
+    /// <summary>
+    /// Augment le niveau max du joueur
+    /// </summary>
+    public void AddNiveau()
+    {
+        this._currentMaxLevel += 1;
+    }
+    /// <summary>
+    /// Ajoute un collectable a la liste
+    /// </summary>
+    /// <param name="nom">Nom du collectable à ajouter</param>
+    public void AddCollectable(string nom)
+    {
+        this._collectableList.Add(nom);
+    }
+    /// <summary>
+    /// Détermine si le collectable a ete ramaser 
+    /// </summary>
+    /// <param name="nom">Nom du collectable à vérifier</param>
+    /// <returns>true si le collectable est ramasser</returns>
+
+    public bool GetCollectable(string nom)
+    {
+        return this._collectableList.Contains(nom);
     }
 
     /// <summary>
