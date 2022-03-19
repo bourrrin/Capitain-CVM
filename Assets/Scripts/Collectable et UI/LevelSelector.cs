@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class LevelSelector : MonoBehaviour
 {
     // Start is called before the first frame update
+    public int nbrButton = 3;
     void Start()
     {
         List<Button> buttonList = new List<Button>();
-        int nbrButton = 3;
 
         for (int i=1; i <= nbrButton; i++)
         {
@@ -19,7 +19,6 @@ public class LevelSelector : MonoBehaviour
         }
 
         Debug.Log(GameManager.Instance.PlayerData.CurrentMaxLevel);
-        GameManager.Instance.PlayerData.SetCurrentMaxLevel(1);
         for (int i = 0; i < GameManager.Instance.PlayerData.CurrentMaxLevel; i++)
         {
             buttonList[i].interactable = true;

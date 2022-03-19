@@ -83,7 +83,9 @@ PrefabInstance:
     - target: {fileID: 3761356204141622912, guid: 79b3b855141436745a96e34c01c1f2b9,
         type: 3}
       propertyPath: m_text
-      value: La patience est vertue...
+      value: 'Les mur sont trompeurs
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 3761356205446005608, guid: 79b3b855141436745a96e34c01c1f2b9,
         type: 3}
