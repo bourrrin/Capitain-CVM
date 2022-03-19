@@ -75,7 +75,10 @@ public class PlayerData
     public int Energie { get { return this._energie; } }
     public int Vie { get { return this._vie; } }
     public int Score { get { return this._score; } }
+    public int CurrentMaxLevel { get { return this._currentMaxLevel; } }
+    public void SetCurrentMaxLevel(int currentMaxLevel){ this._currentMaxLevel= currentMaxLevel; } 
     public string[] ListeCoffreOuvert { get { return this._chestOpenList.ToArray(); } }
+    public string[] ListeCollectable { get { return this._collectableList.ToArray(); } }
 
     public PlayerData()
     {
@@ -96,7 +99,7 @@ public class PlayerData
     public PlayerData(int vie = 1, int energie = 2, int score = 0,
         float volumeGeneral = 0, float volumeMusique = 0, float volumeEffet = 0,
         System.Action uiPerteEnergie = null, System.Action uiPerteVie = null,
-        System.Action gameOver = null, List<string> ChestList = null , List<string> CollectableList = null, int CurrentMaxLevel = 1 )
+        System.Action gameOver = null, List<string> ChestList = null , List<string> CollectableList = null, int CurrentMaxLevel = 0 )
     {
         this._vie = vie;
         this._energie = energie;
@@ -104,6 +107,7 @@ public class PlayerData
         this._volumeGeneral = volumeGeneral;
         this._volumeMusique = volumeMusique;
         this._volumeEffet = volumeEffet;
+        this._currentMaxLevel = CurrentMaxLevel;
         this.UIPerteEnergie += uiPerteEnergie;
         this.UIPerteVie += uiPerteVie;
         this.Gameover += gameOver;

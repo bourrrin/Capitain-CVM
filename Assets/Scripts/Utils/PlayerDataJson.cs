@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine; 
 /// <summary>
 /// Offre un moteur de lecture/écriture du JSON
 /// pour l'objet <code>PlayerData</code>
@@ -10,34 +11,39 @@ public static class PlayerDataJson
     /// </summary>
     /// <param name="data">Paramètre à sérialiser</param>
     /// <returns>La chaîne contenant le format JSON</returns>
+    [System.Serializable]
+    class PlayerDataToJson
+    {
+        public int vie;
+        public int energie;
+        public int score;
+        public int currentMaxLevel;
+        public float volumeGeneral;
+        public float volMusique;
+        public float volEffet;
+        public string[] chestOpenList;
+        public string[] collectableList;
+
+        public PlayerDataToJson(int vie, int energie, int score, float volGeneral, float volMusique, float volEffet, string[] chestList, string[] collectableList, int currentMaxLevel)
+        {
+            this.vie = vie;
+            this.energie = energie;
+            this.score = score;
+            this.currentMaxLevel = currentMaxLevel;
+            this.volEffet = volEffet;
+            this.volumeGeneral = volGeneral;
+            this.volMusique = volMusique;
+            this.chestOpenList = chestList;
+            this.collectableList = collectableList;
+        }
+    }
     public static string WriteJson(PlayerData data)
     {
-        string tab = "\t";
-        string newline = "\n";
-        string json = "{" + newline;
-        json += tab + "\"vie\":" + data.Vie + "," + newline;
-        json += tab + "\"energie\":" + data.Energie + "," + newline;
-        json += tab + "\"score\":" + data.Score + "," + newline;
-        json += tab + "\"volumeGeneral\":" + data.VolumeGeneral.ToString().Replace(',', '.') + "," + newline; 
-        json += tab + "\"volumeMusique\":" + data.VolumeMusique.ToString().Replace(',', '.') + "," + newline; 
-        json += tab + "\"volumeEffet\":" + data.VolumeEffet.ToString().Replace(',', '.') + "," + newline; 
-        json += tab + "\"chestOpenList\":[";
-        if (data.ListeCoffreOuvert.Length > 0)
-        {
-            json += newline;
-            for (int i = 0; i < data.ListeCoffreOuvert.Length; i++)
-            {
-                string chestData = data.ListeCoffreOuvert[i];
-                json += tab + tab + "\"" + chestData + "\"";
-                if (i + 1 < data.ListeCoffreOuvert.Length)
-                    json += ",";
-                json += newline;
-            }
-            json += tab + "]" + newline;
-        }
-        else json += "]" + newline;
-        json += "}";
-        return json;
+        PlayerDataToJson pdtj = new PlayerDataToJson(data.Vie, data.Energie, data.Score, data.VolumeGeneral, data.VolumeMusique, data.VolumeEffet, data.ListeCoffreOuvert, data.ListeCollectable, data.CurrentMaxLevel);
+        Debug.Log(JsonUtility.ToJson(pdtj));
+        return JsonUtility.ToJson(pdtj);
+
+        
     }
 
     /// <summary>
@@ -51,62 +57,25 @@ public static class PlayerDataJson
     /// ne peut pas contenir un format JSON</exception>
     public static PlayerData ReadJson(string json)
     {
-        if (json.Length < 2 || string.IsNullOrEmpty(json))
-            throw new
-                System.ArgumentException("La chaîne n'est pas valide");
-        if (json[0] != '{')
-            throw new JSONFormatExpcetion();
-        json = json.Replace("\t", string.Empty);
+        PlayerDataToJson pdtj = JsonUtility.FromJson<PlayerDataToJson>(json);
 
-        int vie = 0, energie = 0, score = 0;
-        float vlmGeneral = 0, vlmMusique = 0, vlmEffet = 0;
+        //transform la data de chest de array a list
         List<string> chests = new List<string>();
-        string[] lignes = json.Split('\n');
-        
-        for(int i = 1; i < lignes.Length || lignes[i] != "}"; i++)
+        for (int i = 0; i < pdtj.chestOpenList.Length; i++)
         {
-            if (lignes[i] == "}") break;
-
-            string[] parametre = lignes[i].Split(':');
-            if (parametre.Length != 2)
-                throw new JSONFormatExpcetion();
-            switch(parametre[0])
-            {
-                case "\"vie\"":
-                    vie = int.Parse(parametre[1]
-                        .Replace(",", string.Empty));
-                    break;
-                case "\"energie\"":
-                    energie = int.Parse(parametre[1].Replace(",", string.Empty));
-                    break;
-                case "\"score\"":
-                    score = int.Parse(parametre[1].Replace(",", string.Empty));
-                    break;
-                case "\"volumeGeneral\"":
-                    vlmGeneral = float.Parse(parametre[1].Replace(",", string.Empty).Replace('.', ','));
-                    break;
-                case "\"volumeMusique\"":
-                    vlmMusique = float.Parse(parametre[1].Replace(",", string.Empty).Replace('.', ','));
-                    break;
-                case "\"volumeEffet\"":
-                    vlmEffet = float.Parse(parametre[1].Replace(",", string.Empty).Replace('.', ','));
-                    break;
-                case "\"chestOpenList\"":
-                    if (parametre[1] == "[]")
-                        break;
-                    else if (parametre[1] != "[")
-                        throw new JSONFormatExpcetion();
-                    while(lignes[++i] != "]")
-                    {
-                        chests.Add(lignes[i]
-                            .Replace(",", string.Empty)
-                            .Replace("\"", string.Empty));
-                    }
-                    break;
-            }
+            chests.Add(pdtj.chestOpenList[i]);
         }
 
-        return new PlayerData(vie, energie, score, vlmGeneral, vlmMusique, vlmEffet, ChestList: chests);
+
+        //transform la data des collectables de array a list
+        List<string> collectables = new List<string>();
+        for (int i = 0; i < pdtj.collectableList.Length; i++)
+        {
+            collectables.Add(pdtj.collectableList[i]);
+        }
+
+        return new PlayerData(pdtj.vie, pdtj.energie, pdtj.score, pdtj.volumeGeneral, pdtj.volMusique, pdtj.volEffet, ChestList: chests, CollectableList: collectables, CurrentMaxLevel: pdtj.currentMaxLevel);
+
     }
 }
 
