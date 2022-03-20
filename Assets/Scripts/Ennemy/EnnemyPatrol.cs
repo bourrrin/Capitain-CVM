@@ -51,7 +51,7 @@ public class EnnemyPatrol : MonoBehaviour
 
         if (Vector3.Distance(this.transform.position, _cible.position) < _distanceSeuil)
         {
-            _indexPoint = (++_indexPoint) % _points.Length;
+            _indexPoint = (++_indexPoint) % _points.Length; 
             _cible = _points[_indexPoint];
         }
     }

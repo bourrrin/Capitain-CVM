@@ -41,8 +41,12 @@ public class EnnemyBehaviour : MonoBehaviour
     /// </summary>
     private bool _destructionEnCours = false;
 
+    private SpriteRenderer _sr;
+
+
     private void Start()
     {
+        _sr = this.GetComponent<SpriteRenderer>();
         _animator = this.gameObject.GetComponent<Animator>();
     }
 
@@ -76,12 +80,23 @@ public class EnnemyBehaviour : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
-            if (!_invulnerable)
+            if (!_invulnerable && this.gameObject.name != "Snake_shoot")
             {
                 this._pv--;
                 _animator.SetTrigger("DegatActif");
                 _tempsDebutInvulnerabilite = Time.fixedTime;
                 _invulnerable = true;
+            }
+
+            if (this.gameObject.name == "Snake_shoot")
+            {
+                int orientation = 700;
+                if (_sr.flipX)
+                {
+                    orientation = orientation * -1;
+                }
+
+                collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(orientation, 400));
             }
         }
     }

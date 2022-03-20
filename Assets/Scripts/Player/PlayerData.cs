@@ -77,6 +77,7 @@ public class PlayerData
     public int Score { get { return this._score; } }
     public int CurrentMaxLevel { get { return this._currentMaxLevel; } }
     public void SetCurrentMaxLevel(int currentMaxLevel){ this._currentMaxLevel= currentMaxLevel; } 
+    public void SetListeCollectable(List<string> listeCollectable){ this._collectableList = listeCollectable; } 
     public string[] ListeCoffreOuvert { get { return this._chestOpenList.ToArray(); } }
     public string[] ListeCollectable { get { return this._collectableList.ToArray(); } }
 

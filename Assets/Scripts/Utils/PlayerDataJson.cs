@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine; 
+
+//SECTION TRAVAILLER EN COLLABORATION AVEC QUENTIN ET FLORIAN
+
 /// <summary>
 /// Offre un moteur de lecture/écriture du JSON
 /// pour l'objet <code>PlayerData</code>

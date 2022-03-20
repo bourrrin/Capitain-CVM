@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 6948819342474517251}
   - component: {fileID: 6948819342474517260}
   - component: {fileID: 6948819342474517261}
-  - component: {fileID: -1149791681353778516}
+  - component: {fileID: -1996009917318746207}
   m_Layer: 0
-  m_Name: chapeau1
+  m_Name: chapeau3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1882730087041568543, guid: ec6de2404f3c2344e85392aedfc0fa43,
+  m_Sprite: {fileID: -7964517159802646200, guid: ec6de2404f3c2344e85392aedfc0fa43,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -110,7 +110,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5468578, y: 1.9573708}
   m_EdgeRadius: 0
---- !u!114 &-1149791681353778516
+--- !u!114 &-1996009917318746207
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,4 +122,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4490d023e2c954143ad1041dfc659d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectableName: Chapeau 1
+  collectableName: Chapeau 2
